@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  sonar-vision:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: sonar-debris-detection:latest
+    container_name: sonar_detection_platform
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8000
+      - AIS_API_KEY=${AIS_API_KEY:-}
+      - NEWS_API_KEY=${NEWS_API_KEY:-}
+      - MEDIASTACK_API_KEY=${MEDIASTACK_API_KEY:-}
+      - GLOBAL_FISHING_WATCH_API_TOKEN=${GLOBAL_FISHING_WATCH_API_TOKEN:-}
+      - FOURTU_ENABLED=true
+    volumes:
+      # Persistent storage for uploaded sonar images and databases
+      - sonar_uploads:/app/data/uploads
+      - sonar_db:/app/sonar_data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+volumes:
+  sonar_uploads:
+    driver: local
+  sonar_db:
+    driver: local

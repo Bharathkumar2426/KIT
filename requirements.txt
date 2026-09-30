@@ -1,0 +1,18 @@
+# SIH26057: Side-Scan Sonar Object Detection Backend & ML Dependencies
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+python-multipart>=0.0.9
+pydantic>=2.5.0
+sqlalchemy>=2.0.25
+aiosqlite>=0.19.0
+python-dotenv>=1.0.0
+
+# Deep Learning & Computer Vision
+torch>=2.0.0
+torchvision>=0.15.0
+ultralytics>=8.1.0
+opencv-python>=4.8.0
+pillow>=10.0.0
+numpy>=1.24.0
+pyyaml>=6.0.1
+matplotlib>=3.7.0

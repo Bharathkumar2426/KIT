@@ -1,0 +1,41 @@
+{
+  "success": true,
+  "message": "Route calculated successfully",
+  "name": "Puerto Cort\u00e9s \u21c4 Roat\u00e1n Island Channel",
+  "distance_nm": 108.87,
+  "duration_hours": 10.08,
+  "route_coordinates": [
+    [
+      -87.95,
+      15.83
+    ],
+    [
+      -87.79775,
+      16.25
+    ],
+    [
+      -87.79775,
+      16.25
+    ],
+    [
+      -86.5397518891652,
+      16.17223812948624
+    ],
+    [
+      -86.5397518891652,
+      16.17223812948624
+    ],
+    [
+      -86.53,
+      16.33
+    ]
+  ],
+  "waypoints": [],
+  "eca": {
+    "distance_nm": 0,
+    "duration_hours": 0,
+    "share_of_route": 0,
+    "stretches": []
+  },
+  "cached": false
+}

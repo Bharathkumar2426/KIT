@@ -1,0 +1,62 @@
+{
+  "d_from_nm": 1.99,
+  "d_to_nm": 14.52,
+  "distance_nm": 243.62,
+  "duration_hours": 22.5595,
+  "eca": {
+    "distance_nm": 0,
+    "duration_hours": 0,
+    "share_of_route": 0,
+    "stretches": []
+  },
+  "low_confidence": false,
+  "message": "Route calculated successfully",
+  "overridden": false,
+  "route_coordinates": [
+    [
+      103.82,
+      1.26
+    ],
+    [
+      103.853,
+      1.262
+    ],
+    [
+      103.853,
+      1.262
+    ],
+    [
+      103.89075,
+      1.1815
+    ],
+    [
+      103.6,
+      1.10025
+    ],
+    [
+      102.89275,
+      1.498
+    ],
+    [
+      101.97425,
+      2.023
+    ],
+    [
+      101.14925,
+      2.735
+    ],
+    [
+      100.922,
+      2.9265
+    ],
+    [
+      101.197,
+      3.1875
+    ]
+  ],
+  "success": true,
+  "waypoints": [],
+  "name": "Singapore \u21c4 Port Klang (Malacca Strait)",
+  "zone_code": "MALACCA_CHOKEPOINT",
+  "cached": false
+}

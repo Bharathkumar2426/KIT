@@ -1,0 +1,30 @@
+# SIH26057: Physics-Preserving Side-Scan Sonar YOLO Training Configuration
+
+dataset:
+  data_yaml: "data/dataset/sonar_data.yaml"
+  dataset_dir: "data/dataset"
+
+model:
+  base_architecture: "yolov8n.pt"
+  target_weights: "ml/weights/sonar_best.pt"
+
+training:
+  epochs: 30
+  batch_size: 8
+  imgsz: 640
+  optimizer: "auto"
+  lr0: 0.01
+  lrf: 0.01
+  patience: 10
+
+# CRITICAL: Physics-constrained augmentations for Side-Scan Sonar Imagery
+augmentations:
+  fliplr: 0.5        # Horizontal flip preserves acoustic towfish symmetry
+  flipud: 0.0        # STRICTLY PROHIBITED: Inverts acoustic grazing angle and shadow direction
+  hsv_h: 0.0         # STRICTLY ZERO: Sonar is monochromatic acoustic backscatter, not optical RGB
+  hsv_s: 0.0         # STRICTLY ZERO: No optical saturation
+  hsv_v: 0.15        # Acoustic gain / water column attenuation fluctuation
+  degrees: 0.0       # Minimal rotation to prevent unrealistic slant-range geometry
+  translate: 0.05    # Small translation jitter
+  scale: 0.15        # Object distance scaling
+  mosaic: 0.0        # Avoid artificial seams across continuous sonar seafloor swaths

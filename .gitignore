@@ -1,0 +1,98 @@
+# ==========================================
+# Python & Virtual Environments
+# ==========================================
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyd
+*.pyo
+
+# Packaging & Testing
+build/
+dist/
+*.egg-info/
+.eggs/
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# ==========================================
+# Secrets & Environment Variables
+# (Keep secrets private; commit .env.example only)
+# ==========================================
+.env
+.env.*
+!.env.example
+frontend/.env
+frontend/.env.*
+!frontend/.env.example
+
+# ==========================================
+# Databases & Local Backups
+# ==========================================
+*.db
+*.db.bak
+*.db-journal
+*.sqlite3
+sonar_detection.db
+sonar_detection.db.bak
+
+# ==========================================
+# Node / Frontend
+# ==========================================
+frontend/node_modules/
+node_modules/
+frontend/dist/
+frontend/.vite/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ==========================================
+# Runtime Uploads & Scratch Data
+# ==========================================
+data/uploads/*
+!data/uploads/.gitkeep
+scratch/
+benchmark_temp_sonar.png
+
+# ==========================================
+# Large Offline Datasets (800MB+)
+# Model weights are tracked under ml/weights/
+# Demo samples are preserved under data/samples/
+# ==========================================
+data/dataset/
+data/fourtu/
+data/fourtu_test/
+ml/evaluation_results/
+
+# Redundant weights at project root (active weights are in ml/weights/)
+/yolov8n.pt
+
+# ==========================================
+# IDE & OS Files
+# ==========================================
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ==========================================
+# Logs & IDE / Agent internal directories
+# ==========================================
+*.log
+.agents/
+.playwright-mcp/

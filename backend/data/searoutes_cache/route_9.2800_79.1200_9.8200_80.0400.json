@@ -1,0 +1,55 @@
+{
+  "success": true,
+  "message": "Route calculated successfully",
+  "name": "Mandapam \u21c4 Palk Strait Survey Corridor",
+  "corridor": "Palk Strait Coastal Inshore Channel",
+  "zone_code": "PALK_STRAIT",
+  "distance_nm": 68.45,
+  "duration_hours": 5.7,
+  "route_coordinates": [
+    [
+      79.12,
+      9.28
+    ],
+    [
+      79.145,
+      9.295
+    ],
+    [
+      79.1821,
+      9.3142
+    ],
+    [
+      79.215,
+      9.332
+    ],
+    [
+      79.28,
+      9.37
+    ],
+    [
+      79.42,
+      9.45
+    ],
+    [
+      79.65,
+      9.58
+    ],
+    [
+      79.88,
+      9.72
+    ],
+    [
+      80.04,
+      9.82
+    ]
+  ],
+  "waypoints": [],
+  "eca": {
+    "distance_nm": 0,
+    "duration_hours": 0,
+    "share_of_route": 0,
+    "stretches": []
+  },
+  "cached": true
+}

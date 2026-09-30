@@ -1,0 +1,144 @@
+@import 'leaflet/dist/leaflet.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body {
+    margin: 0;
+    padding: 0;
+    overscroll-behavior: none;
+  }
+  body {
+    font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+    overflow-x: hidden;
+  }
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+  main > :first-child { margin-top: 0 !important; }
+  main > :last-child { margin-bottom: 0 !important; }
+}
+
+/* Custom scrollbars - Hidden for cinematic theme */
+::-webkit-scrollbar {
+  display: none;
+}
+::-webkit-scrollbar-track {
+  background: #06101e;
+}
+::-webkit-scrollbar-thumb {
+  background: #1d4b85;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #06b6d4;
+}
+
+/* Sonar Watermark / Scanline effect */
+.sonar-scanlines {
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.25) 50%
+  ), linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.03),
+    rgba(0, 255, 0, 0.01),
+    rgba(0, 0, 255, 0.03)
+  );
+  background-size: 100% 3px, 6px 100%;
+  pointer-events: none;
+}
+
+/* Interactive Viewer Pan/Zoom Canvas */
+.viewer-container {
+  user-select: none;
+  touch-action: none;
+}
+
+/* Leaflet Dark Theme Overrides & Custom Radar Pulse Markers */
+.leaflet-container {
+  background-color: #030a16 !important;
+  font-family: inherit;
+}
+
+.leaflet-popup-content-wrapper {
+  background: #0b192e !important;
+  color: #f1f5f9 !important;
+  border: 1px solid #1e3a5f !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.7), 0 8px 10px -6px rgba(0, 0, 0, 0.5) !important;
+  padding: 2px !important;
+}
+
+.leaflet-popup-tip {
+  background: #0b192e !important;
+  border: 1px solid #1e3a5f !important;
+}
+
+.leaflet-popup-close-button {
+  color: #94a3b8 !important;
+  padding: 6px !important;
+}
+.leaflet-popup-close-button:hover {
+  color: #ffffff !important;
+}
+
+/* Radar Pulse Animations for Geofence Markers */
+@keyframes radar-pulse-extreme {
+  0% {
+    transform: scale(0.9);
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+  }
+  70% {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 14px rgba(239, 68, 68, 0);
+  }
+  100% {
+    transform: scale(0.9);
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+  }
+}
+
+@keyframes radar-pulse-medium {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7);
+  }
+  70% {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 12px rgba(245, 158, 11, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
+  }
+}
+
+@keyframes radar-pulse-low {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6);
+  }
+  70% {
+    transform: scale(1.08);
+    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+.marker-pulse-extreme {
+  animation: radar-pulse-extreme 1.8s infinite ease-in-out;
+}
+
+.marker-pulse-medium {
+  animation: radar-pulse-medium 2.2s infinite ease-in-out;
+}
+
+.marker-pulse-low {
+  animation: radar-pulse-low 2.6s infinite ease-in-out;
+}

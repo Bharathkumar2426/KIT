@@ -1,0 +1,56 @@
+# SIH26057: Side-Scan Sonar Object Detection Class Taxonomy & Configuration
+# Single source of truth for sonar target categories, anomaly handling, and color palettes.
+
+taxonomy:
+  # Active Verified Debris & Anomaly Classes (Trained with clean acoustic data)
+  active_classes:
+    0: "ghost_net"
+    1: "metal_drum"
+    2: "plastic_debris"
+    3: "sunken_wreckage"
+    4: "tire_wheel"
+    5: "pipe_pipeline"
+    6: "container_crate"
+    7: "anchor_chain"
+    8: "wood_debris"
+    9: "rock_boulder"
+
+  # Clean Human-readable labels for UI display
+  display_names:
+    ghost_net: "Ghost Net"
+    metal_drum: "Metal Drum"
+    plastic_debris: "Plastic Debris"
+    sunken_wreckage: "Shipwreck"
+    tire_wheel: "Tire"
+    pipe_pipeline: "Pipeline"
+    container_crate: "Container / Crate"
+    anchor_chain: "Anchor / Chain"
+    wood_debris: "Wood Debris"
+    rock_boulder: "Rock Boulder"
+    unknown_debris: "Unknown Debris"
+    unknown_anomaly: "Unknown Anomaly"
+    natural_anomaly: "Seabed Feature"
+
+  # Color palette (RGB for UI HUD and OpenCV rendering)
+  color_palette:
+    metal_drum: [16, 185, 129]             # Emerald Green
+    tire_wheel: [59, 130, 246]             # Dodger Blue
+    ghost_net: [245, 158, 11]              # Amber Orange
+    plastic_debris: [239, 68, 68]          # Rose Red
+    sunken_wreckage: [168, 85, 247]        # Royal Purple
+    pipe_pipeline: [234, 179, 8]           # Yellow Gold
+    container_crate: [20, 184, 166]        # Teal
+    anchor_chain: [249, 115, 22]           # Deep Orange
+    wood_debris: [180, 83, 9]              # Warm Bronze
+    rock_boulder: [132, 204, 22]           # Lime Green
+    unknown_debris: [6, 182, 212]          # Cyan
+    unknown_anomaly: [6, 182, 212]         # Cyan
+    natural_anomaly: [132, 204, 22]        # Lime
+
+inference_defaults:
+  confidence_threshold: 0.20
+  iou_threshold: 0.45
+  image_size: 640
+  unknown_fallback: "unknown_debris"
+  anomaly_fallback: "unknown_anomaly"
+
