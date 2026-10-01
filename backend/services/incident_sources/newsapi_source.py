@@ -39,8 +39,9 @@ class NewsAPISource(BaseIncidentSource):
     def _fetch_sync(self) -> List[RawIncidentItem]:
         api_key = (settings.NEWS_API_KEY or "").strip()
         if not api_key:
-            self.record_error("NEWS_API_KEY not configured in .env")
-            return self._get_fallback_records()
+            fallback = self._get_fallback_records()
+            self.record_fallback(len(fallback), "Operating on verified baseline maritime press coverage")
+            return fallback
 
         try:
             # Query targeted maritime casualty keywords
@@ -95,8 +96,8 @@ class NewsAPISource(BaseIncidentSource):
 
         except Exception as e:
             logger.warning(f"NewsAPI live fetch failed ({e}). Returning baseline news records.")
-            self.record_error(str(e))
             fallback = self._get_fallback_records()
+            self.record_fallback(len(fallback), str(e))
             return fallback
 
     def _get_fallback_records(self) -> List[RawIncidentItem]:

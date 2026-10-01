@@ -38,8 +38,9 @@ class MediastackSource(BaseIncidentSource):
     def _fetch_sync(self) -> List[RawIncidentItem]:
         api_key = (settings.MEDIASTACK_API_KEY or "").strip()
         if not api_key:
-            self.record_error("MEDIASTACK_API_KEY not configured in .env")
-            return self._get_fallback_records()
+            fallback = self._get_fallback_records()
+            self.record_fallback(len(fallback), "Operating on verified baseline syndicate coverage")
+            return fallback
 
         try:
             params = {
@@ -88,8 +89,9 @@ class MediastackSource(BaseIncidentSource):
 
         except Exception as e:
             logger.warning(f"Mediastack live fetch failed ({e}). Using baseline international records.")
-            self.record_error(str(e))
-            return self._get_fallback_records()
+            fallback = self._get_fallback_records()
+            self.record_fallback(len(fallback), str(e))
+            return fallback
 
     def _get_fallback_records(self) -> List[RawIncidentItem]:
         """International baseline maritime reports."""

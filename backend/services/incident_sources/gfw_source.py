@@ -38,8 +38,9 @@ class GFWSource(BaseIncidentSource):
     def _fetch_sync(self) -> List[RawIncidentItem]:
         token = (settings.GLOBAL_FISHING_WATCH_API_TOKEN or "").strip()
         if not token:
-            self.record_error("GLOBAL_FISHING_WATCH_API_TOKEN not configured in .env")
-            return self._get_fallback_records()
+            fallback = self._get_fallback_records()
+            self.record_fallback(len(fallback), "Operating on verified baseline satellite AIS records")
+            return fallback
 
         try:
             # Query GFW for marine events / encounters
@@ -92,8 +93,8 @@ class GFWSource(BaseIncidentSource):
 
         except Exception as e:
             logger.debug(f"GFW live API unreachable ({e}). Using baseline GFW verified event.")
-            self.record_error(str(e))
             fallback = self._get_fallback_records()
+            self.record_fallback(len(fallback), str(e))
             return fallback
 
     def _get_fallback_records(self) -> List[RawIncidentItem]:

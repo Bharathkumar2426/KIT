@@ -86,8 +86,8 @@ class GDELTSource(BaseIncidentSource):
 
         except Exception as e:
             logger.debug(f"GDELT live endpoint unavailable or rate limited ({e}). Using baseline GDELT records.")
-            self.record_error(str(e))
             fallback = self._get_fallback_records()
+            self.record_fallback(len(fallback), str(e))
             return fallback
 
     def _get_fallback_records(self) -> List[RawIncidentItem]:

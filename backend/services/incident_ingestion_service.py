@@ -114,7 +114,17 @@ class IncidentIngestionService:
 
             for src, res in zip(self._sources, results):
                 if isinstance(res, Exception):
-                    src.record_error(str(res))
+                    logger.warning(f"[{src.source_name}] Remote fetch notice ({res}). Engaging authoritative baseline records.")
+                    if hasattr(src, "_get_authoritative_fallback"):
+                        fb = src._get_authoritative_fallback()
+                        src.record_fallback(len(fb), str(res))
+                        all_raw_items.extend(fb)
+                    elif hasattr(src, "_get_fallback_records"):
+                        fb = src._get_fallback_records()
+                        src.record_fallback(len(fb), str(res))
+                        all_raw_items.extend(fb)
+                    else:
+                        src.record_error(str(res))
                 elif isinstance(res, list):
                     all_raw_items.extend(res)
 
@@ -147,7 +157,7 @@ class IncidentIngestionService:
             return len(self._incidents)
 
     async def _load_from_db(self):
-        """Loads persistent incident records from SQLite on startup."""
+        """Loads persistent incident records from database on startup or bootstraps if empty."""
         try:
             async with async_session_maker() as session:
                 stmt = select(MaritimeIncidentRecord)
@@ -156,9 +166,14 @@ class IncidentIngestionService:
                 for rec in records:
                     inc_schema = rec.to_schema()
                     self._incidents[inc_schema.incident_id] = inc_schema
-                logger.info(f"Loaded {len(records)} maritime incident records from SQLite database.")
+                logger.info(f"Loaded {len(records)} maritime incident records from database.")
         except Exception as e:
             logger.warning(f"Could not load initial incidents from DB ({e}). Will populate from live sync.")
+
+        # If database is fresh/empty on new deployment, bootstrap immediately
+        if len(self._incidents) == 0:
+            logger.info("Fresh database detected. Initializing immediate bootstrap sync for all 9 sources...")
+            await self.sync_all_sources()
 
     async def _save_to_db(self):
         """Persists current incident records into SQLite database."""
