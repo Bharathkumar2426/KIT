@@ -32,34 +32,52 @@ logger = logging.getLogger("MainApp")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Initializes SQLite database schema and starts AIS, Incident, and 4TU services."""
-    logger.info("Initializing SQLite database tables...")
-    await init_db()
-    logger.info("Database initialized successfully.")
+    """Initializes database schema and starts AIS, Incident, and 4TU services with error shields."""
+    try:
+        logger.info("Initializing database tables...")
+        await init_db()
+        logger.info("Database initialized successfully.")
+    except Exception as e:
+        logger.error(f"Database initialization error (continuing): {e}", exc_info=True)
     
     # Start isolated live AISStream ingestion service
-    ais_svc = get_ais_service()
-    await ais_svc.start()
+    try:
+        ais_svc = get_ais_service()
+        await ais_svc.start()
+    except Exception as e:
+        logger.error(f"AIS service start notice: {e}")
 
     # Start independent demo replay service
-    demo_svc = get_ais_demo_service()
-    await demo_svc.start()
+    try:
+        demo_svc = get_ais_demo_service()
+        await demo_svc.start()
+    except Exception as e:
+        logger.error(f"AIS demo service start notice: {e}")
 
     # Start AI maritime incident intelligence service
-    incident_svc = get_incident_ingestion_service()
-    await incident_svc.start()
+    try:
+        incident_svc = get_incident_ingestion_service()
+        await incident_svc.start()
+    except Exception as e:
+        logger.error(f"Incident ingestion service start notice: {e}")
 
     # Start 4TU automated research sonar data ingestion service
-    fourtu_svc = get_fourtu_service()
-    await fourtu_svc.start()
+    try:
+        fourtu_svc = get_fourtu_service()
+        await fourtu_svc.start()
+    except Exception as e:
+        logger.error(f"4TU service start notice: {e}")
     
     yield
     
     # Graceful shutdown of services
-    await ais_svc.stop()
-    await demo_svc.stop()
-    await incident_svc.stop()
-    await fourtu_svc.stop()
+    try:
+        await ais_svc.stop()
+        await demo_svc.stop()
+        await incident_svc.stop()
+        await fourtu_svc.stop()
+    except Exception:
+        pass
     logger.info("Application shutting down.")
 
 
